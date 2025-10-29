@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Imagem em Movimento</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: #f0f0f0;
+    }
+    #minhaImagem {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      transition: none; /* Remove animação suave para controle total via JS */
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Substitua o src pela sua imagem -->
+  <img id="minhaImagem" src="https://via.placeholder.com/100?text=Imagem" alt="Imagem em movimento">
+
+  <script>
+    const img = document.getElementById('minhaImagem');
+    const larguraTela = window.innerWidth - img.width;
+    const alturaTela = window.innerHeight - img.height;
+
+    let posX = 0;
+    let posY = 0;
+    let velocidadeX = 3; // pixels por frame
+    let velocidadeY = 2;
+
+    function animar() {
+      // Atualiza posição
+      posX += velocidadeX;
+      posY += velocidadeY;
+
+      // Verifica colisão com as bordas e inverte direção
+      if (posX <= 0 || posX >= larguraTela) {
+        velocidadeX = -velocidadeX;
+        posX = Math.max(0, Math.min(posX, larguraTela)); // Corrige posição
+      }
+      if (posY <= 0 || posY >= alturaTela) {
+        velocidadeY = -velocidadeY;
+        posY = Math.max(0, Math.min(posY, alturaTela));
+      }
+
+      // Aplica posição na imagem
+      img.style.left = posX + 'px';
+      img.style.top = posY + 'px';
+
+      // Continua a animação
+      requestAnimationFrame(animar);
+    }
+
+    // Inicia a animação
+    animar();
+  </script>
+
+</body>
+</html>
